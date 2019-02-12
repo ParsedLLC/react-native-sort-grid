@@ -1,4 +1,3 @@
-
 <h3 align="center" style="margin-bottom: 21px;">
   Drag-and-drop -style rearrangable grid view
 </h3>
@@ -27,22 +26,17 @@ npm i react-native-sort-grid --save
 ## Usage
 
 ```js
-import SortableGrid from 'react-native-sortable-grid'
+import SortableGrid from 'react-native-sortable-grid';
 
 // ...
 
 <SortableGrid>
-  {
-    ['a', 'b', 'c'].map( (letter, index) =>
-
-      <View key={index}>
-        <Text>{letter}</Text>
-      </View>
-
-    )
-  }
-</SortableGrid>
-
+  {['a', 'b', 'c'].map((letter, index) => (
+    <View key={index}>
+      <Text>{letter}</Text>
+    </View>
+  ))}
+</SortableGrid>;
 ```
 
 ## SortableGrid properties
@@ -61,7 +55,7 @@ import SortableGrid from 'react-native-sortable-grid'
 
 - `activeBlockCenteringDuration` **Number**
 
-  How long should it take for the block that is being dragged to seek its place after it's released  (milliseconds)
+  How long should it take for the block that is being dragged to seek its place after it's released (milliseconds)
 
 - `itemsPerRow` **Number**
 
@@ -84,27 +78,31 @@ import SortableGrid from 'react-native-sortable-grid'
   How long will the execution wait for the second tap before deciding it was a single tap (milliseconds).
   Will be omitted if no onDoubleTap-property is given to the item being tapped - In which case single-tap callback will be executed instantly
 
-- `onDragStart` **Callback** *(activeItem)*
+- `onDragStart` **Callback** _(activeItem)_
 
   Function that is called when the dragging starts. This can be used to lock other touch responders from listening to the touch such as ScrollViews and Swipers.
 
-- `onDragRelease` **Callback** *(itemOrder)*
+- `onDragRelease` **Callback** _(itemOrder)_
 
   Function that is executed after the drag is released. Will return the new item order.
 
-- `onDeleteItem` **Callback** *(item)*
+- `onDeleteItem` **Callback** _(item)_
 
   Function that is executed item is deleted. Will return the properties of the deleted item.
 
 - `dragStartAnimation` **Object**
 
-  Custom animation to override the default wiggle. Must be an object containing a key ```transform```, which is an array of transformations. Read about [transforms](https://facebook.github.io/react-native/docs/transforms.html) and [animations](https://facebook.github.io/react-native/docs/animated.html) and [see the example](example/customAnimationExample.js#L47) to learn how to use this.
+  Custom animation to override the default wiggle. Must be an object containing a key `transform`, which is an array of transformations. Read about [transforms](https://facebook.github.io/react-native/docs/transforms.html) and [animations](https://facebook.github.io/react-native/docs/animated.html) and [see the example](example/customAnimationExample.js#L47) to learn how to use this.
+
+- `disabledBlocks` **Array**
+
+List of block indices that cannot be sorted. They cannot be dragged or displaced by dragging another block.
 
 ## SortableGrid methods
 
 - `toggleDeleteMode` accepts no arguments
 
-  Calling this will toggle item deletion mode on/off. Will return object ```{ deleteModeOn: true/false }```.
+  Calling this will toggle item deletion mode on/off. Will return object `{ deleteModeOn: true/false }`.
 
 ## SortableGrid's children's properties
 
@@ -114,7 +112,7 @@ import SortableGrid from 'react-native-sortable-grid'
 
 - `onDoubleTap` **Callback**
 
-  Function that is executed when the block is double tapped within a timeframe of ```doubleTapTreshold`(default 150ms). Assigning this will delay the execution of ```onTap```. Omitting this will cause all taps to be handled as single taps, regardless of their frequency.
+  Function that is executed when the block is double tapped within a timeframe of `` doubleTapTreshold`(default 150ms). Assigning this will delay the execution of ``onTap```. Omitting this will cause all taps to be handled as single taps, regardless of their frequency.
 
 - `inactive` **Boolean**
 
@@ -145,53 +143,55 @@ Object {
 ## Full SortableGrid example:
 
 ```js
- <SortableGrid
-   blockTransitionDuration      = { 400 }
-   activeBlockCenteringDuration = { 200 }
-   itemsPerRow                  = { 4 }
-   dragActivationTreshold       = { 200 }
-   onDragRelease                = { (itemOrder) => console.log("Drag was released, the blocks are in the following order: ", itemOrder) }
-   onDragStart                  = { ()          => console.log("Some block is being dragged now!") } >
-
-   {
-     ['a', 'b', 'c'].map( (letter, index) =>
-
-       <View key={index} onTap={() => console.log("Item number:", index, "was tapped!") }>
-         <Text>{letter}</Text>
-       </View>
-
-     )
-   }
-
- </SortableGrid>
-
+<SortableGrid
+  blockTransitionDuration={400}
+  activeBlockCenteringDuration={200}
+  itemsPerRow={4}
+  dragActivationTreshold={200}
+  onDragRelease={itemOrder =>
+    console.log(
+      'Drag was released, the blocks are in the following order: ',
+      itemOrder,
+    )
+  }
+  onDragStart={() => console.log('Some block is being dragged now!')}
+>
+  {['a', 'b', 'c'].map((letter, index) => (
+    <View
+      key={index}
+      onTap={() => console.log('Item number:', index, 'was tapped!')}
+    >
+      <Text>{letter}</Text>
+    </View>
+  ))}
+</SortableGrid>
 ```
 
 ## Demos
 
 <p align="center">
 
-  <b>Basic item deletion</b><br>toggleDeleteMode() is called during onTap in this example<br><br>
-  <img alt="Issue Stats" src="http://i.giphy.com/S4OC2Rt4JXEK4.gif">
-  <br><br>
-  
-  <b>Custom block animation can be passed to the grid<br><br>
-  <img alt="Custom animation" src="http://i.giphy.com/FPyiKkqWf1fLW.gif">
-  <br><br>
+<b>Basic item deletion</b><br>toggleDeleteMode() is called during onTap in this example<br><br>
+<img alt="Issue Stats" src="http://i.giphy.com/S4OC2Rt4JXEK4.gif">
+<br><br>
 
-  <b>Smooth resizing of the grid when the last row becomes empty:</b><br><br>
-  <img alt="Issue Stats" src="http://i.giphy.com/PEU01yJh997qM.gif">
-  <br><br>
+<b>Custom block animation can be passed to the grid<br><br>
+<img alt="Custom animation" src="http://i.giphy.com/FPyiKkqWf1fLW.gif">
+<br><br>
 
-  <b>No grid resizing if the grid has flex:1 assigned:</b><br><br>
-  <img alt="Issue Stats" src="http://i.giphy.com/fxBIhIkzydDW0.gif">
-  <br><br>
+<b>Smooth resizing of the grid when the last row becomes empty:</b><br><br>
+<img alt="Issue Stats" src="http://i.giphy.com/PEU01yJh997qM.gif">
+<br><br>
 
-  <b>The item drag is constrained within the grid:</b><br><br>
-  <img alt="Issue Stats" src="http://i.giphy.com/4YsV4fvEmb9Dy.gif">
-  <br><br>
+<b>No grid resizing if the grid has flex:1 assigned:</b><br><br>
+<img alt="Issue Stats" src="http://i.giphy.com/fxBIhIkzydDW0.gif">
+<br><br>
 
-  <b>With flex:1 there is more space to drag:</b><br><br>
-  <img alt="Issue Stats" src="http://i.giphy.com/lX4NyomLbnRvi.gif">
+<b>The item drag is constrained within the grid:</b><br><br>
+<img alt="Issue Stats" src="http://i.giphy.com/4YsV4fvEmb9Dy.gif">
+<br><br>
+
+<b>With flex:1 there is more space to drag:</b><br><br>
+<img alt="Issue Stats" src="http://i.giphy.com/lX4NyomLbnRvi.gif">
 
 </p>
