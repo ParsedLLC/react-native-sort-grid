@@ -202,7 +202,9 @@ class SortableGrid extends Component {
         }
       });
       if (
-        this.disabledBlocks.indexOf(closest) === -1 &&
+        this.disabledBlocks.filter(
+          x => parseInt(x.key, 10) === parseInt(closest, 10),
+        ).length === 0 &&
         closest !== this.state.activeBlock
       ) {
         Animated.timing(this._getBlock(closest).currentPosition, {
@@ -367,7 +369,10 @@ class SortableGrid extends Component {
   };
 
   activateDrag = key => () => {
-    if (this.disabledBlocks.indexOf(key) !== -1) {
+    if (
+      this.disabledBlocks.filter(x => parseInt(x.key, 10) === parseInt(key, 10))
+        .length > 0
+    ) {
       return;
     }
     this.panCapture = true;
